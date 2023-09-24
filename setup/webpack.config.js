@@ -6,12 +6,12 @@ module.exports = async () => {
 
     assertSupportedNodeVersion();
 
-    const mix = require('../src/Mix').primary;
+    const pod = require('../src/Pod').primary;
 
-    require(mix.paths.mix());
+    require(pod.paths.mix());
 
-    await mix.installDependencies();
-    await mix.init();
+    await pod.installDependencies();
+    await pod.init();
 
-    return mix.build();
+    return pod.build();
 };
