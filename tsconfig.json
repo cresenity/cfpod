@@ -1,0 +1,29 @@
+{
+    "include": ["src/**/*", "test/**/*"],
+    "exclude": [
+        "node_modules",
+        "node_modules/@types/*/*",
+        "test/integration/fixture/public",
+        "test/fixtures/integration/dist",
+        "test/fixtures/app/dist",
+        "test/disks"
+    ],
+
+    "compilerOptions": {
+        "target": "ES2020",
+
+        "allowJs": true,
+        "checkJs": true,
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "jsx": "preserve",
+        "resolveJsonModule": true,
+
+        "noEmit": true,
+        "strict": true,
+
+        "paths": {
+            "laravel-mix": ["./types"]
+        }
+    }
+}
