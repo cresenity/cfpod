@@ -8,7 +8,7 @@ module.exports = async () => {
 
     const pod = require('../src/Pod').primary;
 
-    require(pod.paths.mix());
+    require(pod.paths.pod());
 
     await pod.installDependencies();
     await pod.init();
