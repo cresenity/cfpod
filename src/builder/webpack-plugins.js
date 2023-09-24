@@ -1,4 +1,4 @@
-let MixDefinitionsPlugin = require('../webpackPlugins/MixDefinitionsPlugin');
+let PodDefinitionsPlugin = require('../webpackPlugins/PodDefinitionsPlugin');
 let BuildCallbackPlugin = require('../webpackPlugins/BuildCallbackPlugin');
 let CustomTasksPlugin = require('../webpackPlugins/CustomTasksPlugin');
 let ManifestPlugin = require('../webpackPlugins/ManifestPlugin');
@@ -8,49 +8,49 @@ let WebpackBar = require('webpackbar');
 
 /**
  *
- * @param {import("../Mix")} mix
+ * @param {import("../Pod")} pod
  */
-module.exports = function (mix) {
-    // TODO: Remove in Mix 7 -- Here for backwards compat if a plugin requires this file
-    mix = mix || global.Mix;
+module.exports = function (pod) {
+    // TODO: Remove in Pod 7 -- Here for backwards compat if a plugin requires this file
+    pod = pod || global.Pod;
 
     let plugins = [];
 
     // If the user didn't declare any JS compilation, we still need to
     // use a temporary script to force a compile. This plugin will
     // handle the process of deleting the compiled script.
-    if (!mix.bundlingJavaScript) {
-        plugins.push(new MockEntryPlugin(mix));
+    if (!pod.bundlingJavaScript) {
+        plugins.push(new MockEntryPlugin(pod));
     }
 
-    // Activate support for Mix_ .env definitions.
+    // Activate support for Pod_ .env definitions.
     plugins.push(
-        new MixDefinitionsPlugin(mix.paths.root('.env'), {
-            NODE_ENV: mix.inProduction()
+        new PodDefinitionsPlugin(pod.paths.root('.env'), {
+            NODE_ENV: pod.inProduction()
                 ? 'production'
                 : process.env.NODE_ENV || 'development'
         })
     );
 
-    // Handle the creation of the mix-manifest.json file.
-    plugins.push(new ManifestPlugin(mix));
+    // Handle the creation of the pod-manifest.json file.
+    plugins.push(new ManifestPlugin(pod));
 
     // Handle all custom, non-webpack tasks.
-    plugins.push(new CustomTasksPlugin(mix));
+    plugins.push(new CustomTasksPlugin(pod));
 
     // Notify the rest of our app when Webpack has finished its build.
-    plugins.push(new BuildCallbackPlugin(stats => mix.dispatch('build', stats)));
+    plugins.push(new BuildCallbackPlugin(stats => pod.dispatch('build', stats)));
 
     // Enable custom output when the Webpack build completes.
     plugins.push(
         new BuildOutputPlugin({
-            clearConsole: mix.config.clearConsole,
+            clearConsole: pod.config.clearConsole,
             showRelated: true
         })
     );
 
     if (process.env.NODE_ENV !== 'test') {
-        plugins.push(new WebpackBar({ name: 'Mix' }));
+        plugins.push(new WebpackBar({ name: 'Pod' }));
     }
 
     return plugins;

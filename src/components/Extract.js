@@ -16,7 +16,7 @@ module.exports = class Extract extends Component {
     /**
      * The name of the component.
      *
-     * mix.extract() or mix.extractVendor()
+     * pod.extract() or pod.extractVendor()
      */
     name() {
         return ['extract', 'extractVendors'];
@@ -87,7 +87,7 @@ module.exports = class Extract extends Component {
         if (typeof config === 'string') {
             if (output !== null || !config.endsWith('.js')) {
                 throw new Error(
-                    'mix.extract(string) expects a file path as its only argument'
+                    'pod.extract(string) expects a file path as its only argument'
                 );
             }
 
@@ -119,7 +119,7 @@ module.exports = class Extract extends Component {
             extra = libraries.source;
         } else {
             throw new Error(
-                `Unexpected type [${typeof libraries}] passed to mix.extract({ libraries: … }). ` +
+                `Unexpected type [${typeof libraries}] passed to pod.extract({ libraries: … }). ` +
                     `You may pass either an array of strings or a regular expression.`
             );
         }

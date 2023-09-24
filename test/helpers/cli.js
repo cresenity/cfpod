@@ -46,7 +46,7 @@ async function killProcessTree(child) {
 }
 
 /**
- * Return a helper function appropriately configured to run the Mix CLI
+ * Return a helper function appropriately configured to run the Pod CLI
  *
  * @param {{testing?: boolean, cwd?: string, env?: Record<string, string>}} opts
  */
@@ -59,7 +59,7 @@ export function cli(opts) {
     };
 
     /**
-     * Run the Mix CLI
+     * Run the Pod CLI
      *
      * @param {string[]} args
      * @param {CliHooks} hooks
@@ -135,7 +135,7 @@ export function cli(opts) {
     }
 
     /**
-     * Run the Mix and build in assertions
+     * Run the Pod and build in assertions
      *
      * @param {string[]} args
      * @param {CliHooks} [hooks]

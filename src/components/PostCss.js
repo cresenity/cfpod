@@ -4,7 +4,7 @@ const Preprocessor = require('./Preprocessor');
 
 module.exports = class PostCss extends Preprocessor {
     /**
-     * The Mix API name for the component.
+     * The Pod API name for the component.
      */
     name() {
         return ['postCss', 'css'];
@@ -19,7 +19,7 @@ module.exports = class PostCss extends Preprocessor {
      * @param {import('postcss').AcceptedPlugin[]} postCssPlugins
      */
     register(src, output, pluginOptions = {}, postCssPlugins = []) {
-        // Backwards compat with earlier versions of Mix
+        // Backwards compat with earlier versions of Pod
         if (Array.isArray(pluginOptions) && postCssPlugins.length === 0) {
             postCssPlugins = pluginOptions;
             pluginOptions = {};

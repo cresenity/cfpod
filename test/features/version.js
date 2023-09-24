@@ -37,13 +37,13 @@ test.serial('it compiles JavaScript and Sass with versioning', async t => {
 });
 
 test.serial('it can build for production with versioning', async t => {
-    const { mix, Mix, webpack, assert } = context(t);
+    const { mix, Pod, webpack, assert } = context(t);
 
     mix.options({
         production: true
     });
 
-    t.true(Mix.inProduction());
+    t.true(Pod.inProduction());
 
     mix.js(`test/fixtures/app/src/js/app.js`, 'js').version();
 

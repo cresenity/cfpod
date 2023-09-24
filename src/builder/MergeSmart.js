@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 // This code was taken from v4.2.2 of webpack-merge for backwards compatability.
-// With minor modifications since Mix is not transpiled before running in Node.
+// With minor modifications since Pod is not transpiled before running in Node.
 // Sources:
 // 1. https://github.com/survivejs/webpack-merge/blob/v4.2.2/src/index.js
 // 2. https://github.com/survivejs/webpack-merge/blob/v4.2.2/src/join-arrays-smart.js
@@ -272,7 +272,7 @@ module.exports.mergeSmart = mergeWithCustomize({
         return null;
     },
 
-    // Added by Mix to fix a regex merge bug
+    // Added by Pod to fix a regex merge bug
     customizeObject: (a, b, key) => {
         if (a instanceof RegExp) {
             if (b instanceof RegExp) {

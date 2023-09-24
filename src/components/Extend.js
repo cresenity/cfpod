@@ -7,7 +7,7 @@ const { createFunctionalComponent } = require('./FunctionalComponent');
  * @typedef {import('../../types/component').ComponentInterface} ComponentInterface
  * @typedef {import('../../types/component').FunctionalComponent} FunctionalComponent
  * @typedef {import('../../types/component').InstallableComponent} InstallableComponent
- * @typedef {import('../../types/component').Component} MixComponent
+ * @typedef {import('../../types/component').Component} PodComponent
  **/
 
 module.exports = class Extend extends Component {
@@ -36,7 +36,7 @@ module.exports = class Extend extends Component {
     /**
      * Register the component.
      *
-     * @param {MixComponent} component
+     * @param {PodComponent} component
      * @returns {component is FunctionalComponent} component
      */
     looksLikeSimpleCallback(component) {
@@ -52,7 +52,7 @@ module.exports = class Extend extends Component {
             typeof component.prototype.name !== 'function' &&
             typeof component.prototype.register !== 'function' &&
             typeof component.prototype.boot !== 'function' &&
-            typeof component.prototype.mix !== 'function' &&
+            typeof component.prototype.pod !== 'function' &&
             typeof component.prototype.dependencies !== 'function'
         );
     }

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { context } from '../helpers/test.js';
 
 test('mix.then()', t => {
-    const { mix, Mix } = context(t);
+    const { mix, Pod } = context(t);
 
     const spy = sinon.spy();
 
@@ -13,7 +13,7 @@ test('mix.then()', t => {
 
     // Let's fire a "build" event, and make sure that
     // our callback handler is called, as expected.
-    Mix.dispatch('build');
+    Pod.dispatch('build');
 
     t.true(spy.called);
 });

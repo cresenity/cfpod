@@ -156,11 +156,11 @@ test.serial('basic JS compilation with a specific output path config.', async t 
 });
 
 test('mix.js()', async t => {
-    const { mix, Mix } = context(t);
+    const { mix, Pod } = context(t);
 
     mix.js('js/app.js', 'dist/js');
 
-    let jsComponent = Mix.components.get('js');
+    let jsComponent = Pod.components.get('js');
 
     t.deepEqual(
         [

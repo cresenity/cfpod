@@ -7,82 +7,82 @@ import { context } from '../helpers/test.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('that it can fetch the underlying manifest object', async t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    Mix.manifest.add('file/path.js');
+    Pod.manifest.add('file/path.js');
 
-    t.deepEqual({ '/file/path.js': '/file/path.js' }, Mix.manifest.get());
+    t.deepEqual({ '/file/path.js': '/file/path.js' }, Pod.manifest.get());
 });
 
 test('that it can fetch a single versioned path from the underlying manifest', async t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    Mix.config.publicPath = 'public';
+    Pod.config.publicPath = 'public';
 
-    Mix.manifest.add('file/path.js');
+    Pod.manifest.add('file/path.js');
 
-    t.is('public/file/path.js', Mix.manifest.get('file/path.js'));
+    t.is('public/file/path.js', Pod.manifest.get('file/path.js'));
 });
 
 test('it transforms the generated stats assets to the appropriate format', async t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
     let stats = {
         assetsByChunkName: { '/js/app': ['/js/app.js', 'css/app.css'] }
     };
 
-    Mix.manifest.transform(stats);
+    Pod.manifest.transform(stats);
 
     t.deepEqual(
         {
             '/js/app.js': '/js/app.js',
             '/css/app.css': '/css/app.css'
         },
-        Mix.manifest.get()
+        Pod.manifest.get()
     );
 });
 
 test('it can get the underlying manifest object', async t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    t.deepEqual({}, Mix.manifest.get());
+    t.deepEqual({}, Pod.manifest.get());
 });
 
 test('it knows the path to the underlying file', async t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    t.is(path.join(Mix.config.publicPath, 'mix-manifest.json'), Mix.manifest.path());
+    t.is(path.join(Pod.config.publicPath, 'mix-manifest.json'), Pod.manifest.path());
 });
 
 test.serial('it can be refreshed', async t => {
-    const { fs, mix, Mix } = context(t);
+    const { fs, mix, Pod } = context(t);
 
     mix.setPublicPath(__dirname);
 
     await fs().stub({
-        [Mix.manifest.path()]: '{}',
+        [Pod.manifest.path()]: '{}',
         [path.resolve(__dirname, 'js/app.js')]: 'var foo;'
     });
 
     // The initial state of the manifest file should be an empty object.
-    t.deepEqual({}, Mix.manifest.read());
+    t.deepEqual({}, Pod.manifest.read());
 
     // But after we add to the manifest, and then refresh it...
-    Mix.manifest.add('js/app.js').refresh();
+    Pod.manifest.add('js/app.js').refresh();
 
     // Then the manifest file should be updated on the fs.
-    t.deepEqual({ '/js/app.js': '/js/app.js' }, Mix.manifest.read());
+    t.deepEqual({ '/js/app.js': '/js/app.js' }, Pod.manifest.read());
 });
 
 test('it sorts files on the underlying manifest object', async t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    Mix.manifest.add('/path2.js');
-    Mix.manifest.add('/path3.js');
-    Mix.manifest.add('/path1.js');
-    Mix.manifest.add('/path4.js');
+    Pod.manifest.add('/path2.js');
+    Pod.manifest.add('/path3.js');
+    Pod.manifest.add('/path1.js');
+    Pod.manifest.add('/path4.js');
 
-    let manifest = Mix.manifest.get();
+    let manifest = Pod.manifest.get();
 
     t.is(
         ['/path1.js', '/path2.js', '/path3.js', '/path4.js'].join(),
@@ -135,10 +135,10 @@ test.serial('Manifest generation can be disabled', async t => {
 test.serial(
     'Overwriting the manifest plugin with a custom name preserves old behavior',
     async t => {
-        const { assert, mix, Mix, webpack } = context(t);
+        const { assert, mix, Pod, webpack } = context(t);
 
         mix.options({ manifest: 'foo.json' });
-        Mix.manifest.name = 'bar.json';
+        Pod.manifest.name = 'bar.json';
 
         await webpack.compile();
 

@@ -5,7 +5,7 @@ import * as babel from './babel.js';
 import { fs } from './fs.js';
 import { Disk } from './Disk.js';
 import { assert } from './assertions.js';
-import Mix from '../../src/Mix.js';
+import Pod from '../../src/Pod.js';
 
 /**
  * @template {object} MetadataType
@@ -17,7 +17,7 @@ export class TestContext {
     constructor(t) {
         this.t = t;
         this.disk = new Disk();
-        this.Mix = new Mix();
+        this.Pod = new Pod();
         this.publicPath = 'test/fixtures/app/dist';
 
         /** @type {MetadataType} */
@@ -37,11 +37,11 @@ export class TestContext {
     }
 
     async setup() {
-        this.Mix.paths.rootPath = this.disk.root;
+        this.Pod.paths.rootPath = this.disk.root;
 
         this.babel = await babel.recordConfigs();
 
-        await this.Mix.boot();
+        await this.Pod.boot();
         await this.disk.setup();
 
         const publicPath = this.disk.join(this.publicPath);
@@ -55,7 +55,7 @@ export class TestContext {
         this.mix.options({ autoprefixer: false });
 
         // We also enable assetModules
-        // TODO: Remove in Mix 7 -- this should be the default then
+        // TODO: Remove in Pod 7 -- this should be the default then
         this.mix.options({ assetModules: true });
     }
 
@@ -71,9 +71,9 @@ export class TestContext {
             process.env.DISABLE_NOTIFICATIONS = '1';
         }
 
-        await this.Mix.init();
+        await this.Pod.init();
 
-        return this.Mix.build();
+        return this.Pod.build();
     }
 
     async build() {
@@ -81,7 +81,7 @@ export class TestContext {
     }
 
     get mix() {
-        return this.Mix.api;
+        return this.Pod.api;
     }
 
     get webpack() {

@@ -15,13 +15,13 @@ module.exports = class Preact extends Component {
             typeof arguments[1] === 'string'
         ) {
             throw new Error(
-                'mix.preact() is now a feature flag. Use mix.js(source, destination).preact() instead'
+                'pod.preact() is now a feature flag. Use pod.js(source, destination).preact() instead'
             );
         }
     }
 
     /**
-     * Babel config to be merged with Mix's defaults.
+     * Babel config to be merged with Pod's defaults.
      */
     babelConfig() {
         return {

@@ -4,10 +4,10 @@ let collect = require('collect.js');
 class CustomTasksPlugin {
     /**
      *
-     * @param {import('../Mix')} mix
+     * @param {import('../Pod')} pod
      */
-    constructor(mix) {
-        this.mix = mix || global.Mix;
+    constructor(pod) {
+        this.pod = pod || global.Pod;
     }
 
     /**
@@ -19,19 +19,19 @@ class CustomTasksPlugin {
         compiler.hooks.done.tapPromise(this.constructor.name, async stats => {
             await this.runTasks(stats);
 
-            if (this.mix.components.get('version') && !this.mix.isUsing('hmr')) {
+            if (this.pod.components.get('version') && !this.pod.isUsing('hmr')) {
                 this.applyVersioning();
             }
 
-            if (this.mix.inProduction()) {
+            if (this.pod.inProduction()) {
                 await this.minifyAssets();
             }
 
-            if (this.mix.isWatching()) {
-                this.mix.tasks.forEach(task => task.watch(this.mix.isPolling()));
+            if (this.pod.isWatching()) {
+                this.pod.tasks.forEach(task => task.watch(this.pod.isPolling()));
             }
 
-            this.mix.manifest.refresh();
+            this.pod.manifest.refresh();
         });
     }
 
@@ -51,7 +51,7 @@ class CustomTasksPlugin {
         const path = asset.pathFromPublic();
 
         // Add the asset to the manifest
-        this.mix.manifest.add(path);
+        this.pod.manifest.add(path);
 
         // Update the Webpack assets list for better terminal output.
         stats.compilation.assets[path] = {
@@ -66,12 +66,12 @@ class CustomTasksPlugin {
      * @param stats
      */
     async runTasks(stats) {
-        let assets = []
+        let assets = [];
 
-        for (const task of this.mix.tasks) {
+        for (const task of this.pod.tasks) {
             await Promise.resolve(task.run());
 
-            assets.push(...task.assets)
+            assets.push(...task.assets);
         }
 
         await Promise.allSettled(assets.map(asset => this.addAsset(asset, stats)));
@@ -81,7 +81,7 @@ class CustomTasksPlugin {
      * Minify the given asset file.
      */
     async minifyAssets() {
-        const assets = collect(this.mix.tasks)
+        const assets = collect(this.pod.tasks)
             .where('constructor.name', '!==', 'VersionFilesTask')
             .where('constructor.name', '!==', 'CopyFilesTask')
             .flatMap(({ assets }) => assets);
@@ -92,7 +92,7 @@ class CustomTasksPlugin {
             } catch (e) {
                 Log.error(
                     `Whoops! We had trouble minifying "${asset.relativePath()}". ` +
-                        `Perhaps you need to use mix.babel() instead?`
+                        `Perhaps you need to use pod.babel() instead?`
                 );
 
                 throw e;
@@ -106,8 +106,8 @@ class CustomTasksPlugin {
      * Version all files that are present in the manifest.
      */
     applyVersioning() {
-        for (const [key, value] of Object.entries(this.mix.manifest.get())) {
-            this.mix.manifest.hash(key)
+        for (const [key, value] of Object.entries(this.pod.manifest.get())) {
+            this.pod.manifest.hash(key);
         }
     }
 }

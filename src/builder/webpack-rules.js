@@ -1,13 +1,13 @@
 /**
  *
- * @param {import("../Mix")} mix
+ * @param {import("../Pod")} pod
  * @returns {import("webpack").RuleSetRule[]}
  */
-module.exports = function (mix) {
-    // TODO: Remove in Mix 7 -- Here for backwards compat if a plugin requires this file
-    mix = mix || global.Mix;
+module.exports = function (pod) {
+    // TODO: Remove in Pod 7 -- Here for backwards compat if a plugin requires this file
+    pod = pod || global.Pod;
 
-    return Array.from(buildRules(mix));
+    return Array.from(buildRules(pod));
 };
 
 /**
@@ -35,10 +35,10 @@ function normalizedPackageFilename(filename, dirs) {
 
 /**
  *
- * @param {import("../Mix")} mix
+ * @param {import("../Pod")} pod
  * @returns {Iterable<import("webpack").RuleSetRule>}
  */
-function* buildRules(mix) {
+function* buildRules(pod) {
     /**
      * @param {object} param0
      * @param {boolean} [param0.when]
@@ -52,7 +52,7 @@ function* buildRules(mix) {
             return [];
         }
 
-        if (mix.config.assetModules) {
+        if (pod.config.assetModules) {
             return [
                 {
                     test,
@@ -64,8 +64,8 @@ function* buildRules(mix) {
                          * @returns
                          */
                         filename: pathData =>
-                            name(pathData, { dirs: mix.config.assetDirs }),
-                        publicPath: mix.config.resourceRoot
+                            name(pathData, { dirs: pod.config.assetDirs }),
+                        publicPath: pod.config.resourceRoot
                     },
                     use: loaders
                 }
@@ -77,7 +77,7 @@ function* buildRules(mix) {
                 test,
                 use: [
                     {
-                        loader: mix.resolve('file-loader'),
+                        loader: pod.resolve('file-loader'),
                         options: {
                             // we're somewhat mimic-ing the asset module API here to simply name resolution further down
                             /**
@@ -89,11 +89,11 @@ function* buildRules(mix) {
                                     { filename: path },
                                     {
                                         dirs:
-                                            mix.config.fileLoaderDirs ||
-                                            mix.config.assetDirs
+                                            pod.config.fileLoaderDirs ||
+                                            pod.config.assetDirs
                                     }
                                 ).replace('[ext]', '.[ext]'),
-                            publicPath: mix.config.resourceRoot
+                            publicPath: pod.config.resourceRoot
                         }
                     },
                     ...loaders
@@ -106,20 +106,20 @@ function* buildRules(mix) {
     yield {
         test: /\.html$/,
         resourceQuery: { not: [/\?vue/i] },
-        use: [{ loader: mix.resolve('html-loader') }]
+        use: [{ loader: pod.resolve('html-loader') }]
     };
 
     // Add support for loading images.
     yield* asset({
-        when: !!mix.config.imgLoaderOptions,
+        when: !!pod.config.imgLoaderOptions,
 
         // only include svg that doesn't have font in the path or file name by using negative lookahead
         test: /(\.(png|jpe?g|gif|webp|avif)$|^((?!font).)*\.svg$)/,
 
         loaders: [
             {
-                loader: mix.resolve('img-loader'),
-                options: mix.config.imgLoaderOptions || {}
+                loader: pod.resolve('img-loader'),
+                options: pod.config.imgLoaderOptions || {}
             }
         ],
 

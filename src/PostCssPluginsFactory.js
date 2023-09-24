@@ -1,7 +1,7 @@
 module.exports = class PostCssPluginsFactory {
     /**
      * Create a new instance.
-     * @param {import('./Mix.js')} context
+     * @param {import('./Pod.js')} context
      */
     constructor(context) {
         this.context = context;
@@ -40,7 +40,7 @@ module.exports = class PostCssPluginsFactory {
     }
 
     /**
-     * Load any global postcss plugins that have been passed to Mix.
+     * Load any global postcss plugins that have been passed to Pod.
      */
     loadGlobalPlugins() {
         if (this.context.config.postCss && this.context.config.postCss.length) {
@@ -49,7 +49,7 @@ module.exports = class PostCssPluginsFactory {
     }
 
     /**
-     * Load any postcss plugins that were passed to the Mix command.
+     * Load any postcss plugins that were passed to the Pod command.
      *
      * @param {import('postcss').AcceptedPlugin[] | undefined} plugins
      */

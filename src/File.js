@@ -58,7 +58,7 @@ class File {
     }
 
     normalizedOutputPath() {
-        let path = this.pathFromPublic(this.mix.config.publicPath);
+        let path = this.pathFromPublic(this.pod.config.publicPath);
 
         path = File.stripPublicDir(path);
 
@@ -109,14 +109,14 @@ class File {
      * Get the relative path to the file, from the project root.
      */
     relativePath() {
-        return path.relative(this.mix.paths.root(), this.path());
+        return path.relative(this.pod.paths.root(), this.path());
     }
 
     /**
      * Get the relative path to the file, from the project root.
      */
     relativePathWithoutExtension() {
-        return path.relative(this.mix.paths.root(), this.pathWithoutExtension());
+        return path.relative(this.pod.paths.root(), this.pathWithoutExtension());
     }
 
     /**
@@ -132,7 +132,7 @@ class File {
      * @param {string|null} [publicPath]
      */
     forceFromPublic(publicPath = null) {
-        publicPath = publicPath || this.mix.config.publicPath;
+        publicPath = publicPath || this.pod.config.publicPath;
 
         if (!this.relativePath().startsWith(publicPath)) {
             return new File(path.join(publicPath, this.relativePath()));
@@ -147,7 +147,7 @@ class File {
      * @param {string|null} publicPath
      */
     static stripPublicDir(filePath, publicPath = null) {
-        let publicDir = path.basename(publicPath || this.mix.config.publicPath);
+        let publicDir = path.basename(publicPath || this.pod.config.publicPath);
 
         publicDir = escapeRegExp(publicDir);
 
@@ -160,7 +160,7 @@ class File {
      * @param {string|null} [publicPath]
      */
     pathFromPublic(publicPath) {
-        publicPath = publicPath || this.mix.config.publicPath;
+        publicPath = publicPath || this.pod.config.publicPath;
 
         let extra = this.filePath.startsWith(publicPath) ? publicPath : '';
 
@@ -174,7 +174,7 @@ class File {
         }
 
         return path.normalize(
-            '/' + path.relative(this.mix.paths.root(extra), this.path())
+            '/' + path.relative(this.pod.paths.root(extra), this.path())
         );
     }
 
@@ -280,7 +280,7 @@ class File {
         if (this.extension() === '.js') {
             const output = await Terser.minify(
                 this.read(),
-                this.mix.config.terser.terserOptions
+                this.pod.config.terser.terserOptions
             );
 
             if (output.code !== undefined) {
@@ -289,7 +289,7 @@ class File {
         }
 
         if (this.extension() === '.css') {
-            const output = await new UglifyCss(this.mix.config.cleanCss).minify(
+            const output = await new UglifyCss(this.pod.config.cleanCss).minify(
                 this.read()
             );
 
@@ -408,14 +408,14 @@ class File {
     }
 
     // TODO: Can we refactor this to remove the need for implicit global? Or does this one make sense to leave as is?
-    get mix() {
+    get pod() {
         // TODO: Use warning-less version here
-        return global.Mix;
+        return global.Pod;
     }
 
-    static get mix() {
+    static get pod() {
         // TODO: Use warning-less version here
-        return global.Mix;
+        return global.Pod;
     }
 }
 

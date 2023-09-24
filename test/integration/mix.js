@@ -78,10 +78,10 @@ test.serial.afterEach.always(t => {
 });
 
 test.serial('compiling just js', async t => {
-    const { mix, Mix, webpack } = context(t);
+    const { mix, Pod, webpack } = context(t);
 
     // Build a simple mix setup
-    await setupVueAliases(3, Mix);
+    await setupVueAliases(3, Pod);
 
     mix.js('test/fixtures/integration/src/js/app.js', 'js/app.js');
     mix.vue({ extractStyles: 'css/vue-styles.css' });
@@ -93,9 +93,9 @@ test.serial('compiling just js', async t => {
 });
 
 test.serial('compiling js and css together', async t => {
-    const { mix, Mix, webpack } = context(t);
+    const { mix, Pod, webpack } = context(t);
 
-    await setupVueAliases(3, Mix);
+    await setupVueAliases(3, Pod);
 
     // Build a simple mix setup
     mix.js('test/fixtures/integration/src/js/app.js', 'js/app.js');
@@ -118,9 +118,9 @@ test.serial('compiling js and css together', async t => {
 });
 
 test.serial('node browser polyfills: enabled', async t => {
-    const { mix, Mix, webpack } = context(t);
+    const { mix, Pod, webpack } = context(t);
 
-    await setupVueAliases(3, Mix);
+    await setupVueAliases(3, Pod);
 
     mix.js('test/fixtures/integration/src/js/app.js', 'js/app.js');
     mix.vue({ extractStyles: 'css/vue-styles.css' });
@@ -139,9 +139,9 @@ test.serial('node browser polyfills: enabled', async t => {
 });
 
 test.serial('node browser polyfills: disabled', async t => {
-    const { mix, Mix, webpack } = context(t);
+    const { mix, Pod, webpack } = context(t);
 
-    await setupVueAliases(3, Mix);
+    await setupVueAliases(3, Pod);
 
     mix.js('test/fixtures/integration/src/js/app.js', 'js/app.js');
     mix.vue({ extractStyles: 'css/vue-styles.css' });

@@ -3,11 +3,11 @@ import test from 'ava';
 import { context } from '../helpers/test.js';
 
 test('mix.dumpWebpackConfig()', async t => {
-    const { mix, Mix, webpack } = context(t);
+    const { mix, Pod, webpack } = context(t);
 
     let config;
 
-    Mix.logger.info = webpackConfig => {
+    Pod.logger.info = webpackConfig => {
         config = JSON.parse(webpackConfig);
     };
 

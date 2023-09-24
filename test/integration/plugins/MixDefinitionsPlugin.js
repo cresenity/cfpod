@@ -2,12 +2,12 @@ import test from 'ava';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import MixDefinitionsPlugin from '../../../src/webpackPlugins/MixDefinitionsPlugin.js';
+import PodDefinitionsPlugin from '../../../src/webpackPlugins/PodDefinitionsPlugin.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('it fetches the MIX_ definitions properly', t => {
-    let plugin = new MixDefinitionsPlugin(path.resolve(__dirname, 'testing.env'));
+    let plugin = new PodDefinitionsPlugin(path.resolve(__dirname, 'testing.env'));
 
     let MIX_TESTING = '"123"';
     let NODE_ENV = '"production"';

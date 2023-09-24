@@ -9,7 +9,7 @@ import ReactComponent from '../../src/components/React.js';
 import { createRequire } from 'module';
 
 test('mix.react()', t => {
-    const { mix, Mix } = context(t);
+    const { mix, Pod } = context(t);
 
     mix.react().js('src/app.js', 'dist');
 
@@ -20,7 +20,7 @@ test('mix.react()', t => {
                 output: new File('dist')
             }
         ],
-        Mix.components.get('js').toCompile
+        Pod.components.get('js').toCompile
     );
 });
 
@@ -81,18 +81,18 @@ test('non-feature-flag use of mix.preact throws an error', t => {
 });
 
 test('fast refreshing is disabled when not in hot mode', t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    t.false(new ReactComponent(Mix).supportsFastRefreshing());
+    t.false(new ReactComponent(Pod).supportsFastRefreshing());
 });
 
 test('it supports fast refreshing in hot mode if the React version is 16.9.0 or higher', t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
     // Fake hot mode.
-    Mix.isHot = () => true;
+    Pod.isHot = () => true;
 
-    let react = new ReactComponent(Mix);
+    let react = new ReactComponent(Pod);
     let library = sinon.stub(react, 'library');
 
     library.onFirstCall().returns({ version: '15.0.0' });
@@ -103,9 +103,9 @@ test('it supports fast refreshing in hot mode if the React version is 16.9.0 or 
 });
 
 test('it adds the necessary fast refreshing dependencies', t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    let react = new ReactComponent(Mix);
+    let react = new ReactComponent(Pod);
 
     sinon.stub(react, 'supportsFastRefreshing').returns(true);
 
@@ -121,9 +121,9 @@ test('it adds the necessary fast refreshing dependencies', t => {
 });
 
 test('it adds the necessary fast refreshing webpack plugins', t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    let react = new ReactComponent(Mix);
+    let react = new ReactComponent(Pod);
 
     sinon.stub(react, 'supportsFastRefreshing').returns(true);
 
@@ -132,9 +132,9 @@ test('it adds the necessary fast refreshing webpack plugins', t => {
 });
 
 test('it adds the necessary babel config', t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    let react = new ReactComponent(Mix);
+    let react = new ReactComponent(Pod);
     let require = createRequire(import.meta.url);
 
     sinon.stub(react, 'supportsFastRefreshing').returns(true);

@@ -1,10 +1,10 @@
 import test from 'ava';
 
 import buildConfig from '../../src/config.js';
-import Mix from '../../src/Mix.js';
+import Pod from '../../src/Pod.js';
 
 test('that it can merge config', t => {
-    let config = buildConfig(new Mix());
+    let config = buildConfig(new Pod());
 
     config.merge({
         versioning: true,

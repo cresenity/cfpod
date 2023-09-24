@@ -1,4 +1,4 @@
-// Type definitions for laravel-mix 6.0
+// Type definitions for cfpod 1.0.0
 
 // This is a workaround because `TerserPluginOptions` isn't exported from webpack-terser-plugin
 

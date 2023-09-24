@@ -40,7 +40,7 @@ module.exports = class Combine extends Component {
 
         if (this.caller !== 'minify') {
             throw new Error(
-                `An output file path is required when using mix.${this.caller}()`
+                `An output file path is required when using pod.${this.caller}()`
             );
         }
 

@@ -191,7 +191,7 @@ class CssWebpackConfig extends Component {
      * The default is to inline styles
      *
      * @param {object} options
-     * @param {import('../Mix')} options.context The method to use when handling CSS.
+     * @param {import('../Pod')} options.context The method to use when handling CSS.
      * @param {"auto" | "inline" | "extract"} options.method The method to use when handling CSS.
      * @param {"default" | "per-file"} options.location Where these loaders are applied. The `default` set or on a per-file basis (used by preprocessors).
      */
@@ -231,7 +231,7 @@ class CssWebpackConfig extends Component {
 
     /**
      * @private
-     * @param {import('../Mix')} context
+     * @param {import('../Pod')} context
      **/
     static wantsVueStyleLoader(context) {
         const VueFeature = context.components.get('vue');
@@ -246,7 +246,7 @@ class CssWebpackConfig extends Component {
      * The default is to inline styles
      *
      * @param {object} options
-     * @param {import('../Mix')} options.context
+     * @param {import('../Pod')} options.context
      * @param {string} options.type The file type
      * @param {boolean} options.injectGlobalStyles Whether or not to inject global styles
      */
@@ -275,7 +275,7 @@ class CssWebpackConfig extends Component {
 
     /**
      *
-     * @param {import('../Mix')} context
+     * @param {import('../Pod')} context
      * @param {string | Record<string, string|string[]>} styles
      */
     static normalizeGlobalStyles(context, styles) {

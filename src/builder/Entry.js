@@ -4,11 +4,11 @@ let File = require('../File');
 class Entry {
     /**
      * Create a new Entry instance.
-     * @param {import("../Mix")} mix
+     * @param {import("../Pod")} pod
      */
-    constructor(mix) {
-        // TODO: Simplify in Mix 7 -- Here for backwards compat if a plugin creates this class directly
-        this.mix = mix || global.Mix;
+    constructor(pod) {
+        // TODO: Simplify in Pod 7 -- Here for backwards compat if a plugin creates this class directly
+        this.pod = pod || global.Pod;
 
         /** @type {Record<string, string[]>} */
         this.structure = {};
@@ -58,11 +58,11 @@ class Entry {
      * Add a default entry script to the structure.
      */
     addDefault() {
-        this.add('mix', new File(path.resolve(__dirname, 'mock-entry.js')).path());
+        this.add('pod', new File(path.resolve(__dirname, 'mock-entry.js')).path());
     }
 
     hasDefault() {
-        return (this.structure.mix || []).some(path => path.includes('mock-entry.js'));
+        return (this.structure.pod || []).some(path => path.includes('mock-entry.js'));
     }
 
     /**
@@ -72,7 +72,7 @@ class Entry {
      */
     createName(output) {
         let name = output
-            .pathFromPublic(this.mix.config.publicPath)
+            .pathFromPublic(this.pod.config.publicPath)
             .replace(/\.js$/, '')
             .replace(/\\/g, '/');
 
@@ -91,11 +91,11 @@ class Entry {
         // All output paths need to start at the project's public dir.
         let pathFromPublicDir = output.pathFromPublic();
         if (
-            !pathFromPublicDir.startsWith('/' + this.mix.config.publicPath) &&
-            !pathFromPublicDir.startsWith('\\' + this.mix.config.publicPath)
+            !pathFromPublicDir.startsWith('/' + this.pod.config.publicPath) &&
+            !pathFromPublicDir.startsWith('\\' + this.pod.config.publicPath)
         ) {
             output = new File(
-                path.join(this.mix.config.publicPath, output.pathFromPublic())
+                path.join(this.pod.config.publicPath, output.pathFromPublic())
             );
         }
 

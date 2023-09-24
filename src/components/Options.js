@@ -21,14 +21,14 @@ module.exports = class Options extends Component {
         if ('extractVueStyles' in options) {
             messages.push({
                 type: 'warn',
-                text: 'The option extractVueStyles has been moved. Please pass the extractStyles option to mix.vue() instead.'
+                text: 'The option extractVueStyles has been moved. Please pass the extractStyles option to pod.vue() instead.'
             });
         }
 
         if ('globalVueStyles' in options) {
             messages.push({
                 type: 'warn',
-                text: 'The option globalVueStyles has been moved. Please pass the globalStyles option to mix.vue() instead.'
+                text: 'The option globalVueStyles has been moved. Please pass the globalStyles option to pod.vue() instead.'
             });
         }
 
@@ -58,6 +58,6 @@ module.exports = class Options extends Component {
             props['globalStyles'] = options.globalVueStyles;
         }
 
-        return `mix.vue(${JSON.stringify(props, null, 2)}})`;
+        return `pod.vue(${JSON.stringify(props, null, 2)}})`;
     }
 };

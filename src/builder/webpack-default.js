@@ -3,19 +3,19 @@ let TerserPlugin = require('terser-webpack-plugin');
 
 /**
  *
- * @param {import("../Mix")} mix
+ * @param {import("../Pod")} pod
  * @returns {import("webpack").Configuration & {devServer?: import("webpack").WebpackOptionsNormalized["devServer"]}}
  */
-module.exports = function (mix) {
-    // TODO: Remove in Mix 7 -- Here for backwards compat if a plugin requires this file
-    mix = mix || global.Mix;
+module.exports = function (pod) {
+    // TODO: Remove in Pod 7 -- Here for backwards compat if a plugin requires this file
+    pod = pod || global.Pod;
 
     return {
-        context: mix.paths.root(),
+        context: pod.paths.root(),
 
-        mode: mix.inProduction() ? 'production' : 'development',
+        mode: pod.inProduction() ? 'production' : 'development',
 
-        infrastructureLogging: mix.isWatching() ? { level: 'none' } : {},
+        infrastructureLogging: pod.isWatching() ? { level: 'none' } : {},
 
         entry: {},
 
@@ -30,36 +30,36 @@ module.exports = function (mix) {
 
         resolve: {
             extensions: ['*', '.wasm', '.mjs', '.js', '.jsx', '.json'],
-            roots: [path.resolve(mix.config.publicPath)]
+            roots: [path.resolve(pod.config.publicPath)]
         },
 
         stats: {
             preset: 'errors-warnings',
-            performance: mix.inProduction()
+            performance: pod.inProduction()
         },
 
         performance: {
             hints: false
         },
 
-        optimization: mix.inProduction()
+        optimization: pod.inProduction()
             ? {
                   providedExports: true,
                   sideEffects: true,
                   usedExports: true,
                   // @ts-ignore
-                  minimizer: [new TerserPlugin(mix.config.terser)]
+                  minimizer: [new TerserPlugin(pod.config.terser)]
               }
             : {},
 
-        devtool: mix.config.sourcemaps,
+        devtool: pod.config.sourcemaps,
 
         // @ts-ignore
         devServer: {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             },
-            static: path.resolve(mix.config.publicPath),
+            static: path.resolve(pod.config.publicPath),
             historyApiFallback: true,
             compress: true,
             allowedHosts: 'all'

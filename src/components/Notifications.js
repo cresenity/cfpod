@@ -19,14 +19,14 @@ module.exports = class Notifications extends Component {
 
         return [
             new WebpackNotifierPlugin({
-                appID: 'Laravel Mix',
+                appID: 'Laravel Pod',
 
-                title: 'Laravel Mix',
+                title: 'Laravel Pod',
                 alwaysNotify: this.context.config.notifications.onSuccess,
                 timeout: false,
                 hint: process.platform === 'linux' ? 'int:transient:1' : undefined,
                 contentImage: this.context.paths.root(
-                    'node_modules/laravel-mix/icons/laravel.png'
+                    'node_modules/cfpod/icons/laravel.png'
                 )
             })
         ];

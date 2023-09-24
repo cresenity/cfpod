@@ -2,7 +2,7 @@ let dotenv = require('dotenv');
 let expand = require('dotenv-expand');
 
 /** @internal */
-class MixDefinitionsPlugin {
+class PodDefinitionsPlugin {
     /**
      *
      * @param {string} envPath
@@ -76,9 +76,9 @@ class MixDefinitionsPlugin {
      * @param {Record<string, string>} additionalEnv
      */
     static build(additionalEnv) {
-        return new MixDefinitionsPlugin(global.Mix.paths.root('.env'), additionalEnv)
+        return new PodDefinitionsPlugin(global.Pod.paths.root('.env'), additionalEnv)
             .plugin;
     }
 }
 
-module.exports = MixDefinitionsPlugin;
+module.exports = PodDefinitionsPlugin;

@@ -2,7 +2,7 @@ const { Component } = require('./Component');
 
 module.exports = class DumpWebpackConfig extends Component {
     /**
-     * The optional name to be used when called by Mix.
+     * The optional name to be used when called by Pod.
      */
     name() {
         return ['dumpWebpackConfig', 'dump'];

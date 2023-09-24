@@ -7,7 +7,7 @@ module.exports = class Vue extends Component {
     version = 2;
 
     /**
-     * @type {import('laravel-mix').VueConfig} options
+     * @type {import('cfpod').VueConfig} options
      */
     options = {
         version: undefined,
@@ -21,7 +21,7 @@ module.exports = class Vue extends Component {
     /**
      * Register the component.
      *
-     * @param {import('laravel-mix').VueConfig} options
+     * @param {import('cfpod').VueConfig} options
      */
     register(options = {}) {
         if (
@@ -30,7 +30,7 @@ module.exports = class Vue extends Component {
             typeof arguments[1] === 'string'
         ) {
             throw new Error(
-                'mix.vue() is a feature flag. Use mix.js(source, destination).vue() instead'
+                'pod.vue() is a feature flag. Use pod.js(source, destination).vue() instead'
             );
         }
 

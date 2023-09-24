@@ -8,19 +8,19 @@ import { context } from '../helpers/test.js';
 
 /**
  * @param {string|number} version
- * @param {import('../../src/Mix.js')} Mix
+ * @param {import('../../src/Pod.js')} Pod
  */
-export function setupVueAliases(version, Mix) {
+export function setupVueAliases(version, Pod) {
     const vueModule = version === 3 ? 'vue3/dist/vue.cjs.js' : 'vue2/dist/vue.common.js';
     const vueCompiler = version === 3 ? '@vue/compiler-dom' : 'vue-template-compiler';
     const vueLoaderModule = version === 3 ? 'vue-loader16' : 'vue-loader15';
 
-    Mix.resolver.alias('vue', vueModule);
-    Mix.resolver.alias('vue-loader', vueLoaderModule);
-    Mix.resolver.alias('vue-compiler', vueCompiler);
+    Pod.resolver.alias('vue', vueModule);
+    Pod.resolver.alias('vue-loader', vueLoaderModule);
+    Pod.resolver.alias('vue-compiler', vueCompiler);
 
     const require = createRequire(import.meta.url);
-    Mix.api.alias({
+    Pod.api.alias({
         vue: require.resolve(vueModule),
         vue$: require.resolve(vueModule)
     });
@@ -44,12 +44,12 @@ export function setupVueTests({ version, dir }) {
     let compilerName = version === 2 ? 'vue-template-compiler' : '@vue/compiler-sfc';
 
     test.beforeEach(async t => {
-        const { mix, Mix } = context(t);
+        const { mix, Pod } = context(t);
 
-        await setupVueAliases(version, Mix);
+        await setupVueAliases(version, Pod);
         mix.options({ processCssUrls: false });
 
-        compiler = await compilerSpy(Mix);
+        compiler = await compilerSpy(Pod);
     });
 
     test('it adds the Vue resolve alias', async t => {
@@ -82,11 +82,11 @@ export function setupVueTests({ version, dir }) {
     });
 
     test.serial('it knows the Vue compiler name', async t => {
-        const { mix, Mix } = context(t);
+        const { mix, Pod } = context(t);
 
         mix.vue();
 
-        let dependencies = Mix.components.get('vue').dependencies();
+        let dependencies = Pod.components.get('vue').dependencies();
 
         t.true(dependencies.includes(compilerName));
     });
@@ -522,8 +522,8 @@ export function setupVueTests({ version, dir }) {
     );
 }
 
-async function compilerSpy(Mix) {
-    const compiler = await import(pathToFileURL(Mix.resolve('vue-compiler')).toString());
+async function compilerSpy(Pod) {
+    const compiler = await import(pathToFileURL(Pod.resolve('vue-compiler')).toString());
     const spy = sinon.spy();
 
     // We don't use sinon.spy directly because if you create a spy

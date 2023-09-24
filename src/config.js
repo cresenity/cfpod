@@ -6,11 +6,11 @@ const yargs = require('yargs/yargs');
 
 /**
  *
- * @param {import("./Mix")} mix
+ * @param {import("./Pod")} pod
  */
-module.exports = function (mix) {
-    // TODO: Remove in Mix 7 -- Here for backwards compat if a plugin requires this file
-    mix = mix || global.Mix;
+module.exports = function (pod) {
+    // TODO: Remove in Pod 7 -- Here for backwards compat if a plugin requires this file
+    pod = pod || global.Pod;
 
     const argv = yargs(process.argv.slice(2))
         .options({
@@ -150,7 +150,7 @@ module.exports = function (mix) {
         babel: function () {
             const BabelConfig = require('./BabelConfig');
 
-            return new BabelConfig(mix).generate();
+            return new BabelConfig(pod).generate();
         },
 
         /**
@@ -198,21 +198,21 @@ module.exports = function (mix) {
         cleanCss: {},
 
         /**
-         * Custom Webpack-specific configuration to merge/override Mix's.
+         * Custom Webpack-specific configuration to merge/override Pod's.
          *
          * @type {Object}
          */
         webpackConfig: {},
 
         /**
-         * Custom Babel configuration to be merged with Mix's defaults.
+         * Custom Babel configuration to be merged with Pod's defaults.
          *
          * @type {BabelConfig}
          */
         babelConfig: {},
 
         /**
-         * Determine if Mix should ask the friendly errors plugin to
+         * Determine if Pod should ask the friendly errors plugin to
          * clear the console before outputting the results or not.
          *
          * https://github.com/geowarin/friendly-errors-webpack-plugin#options
@@ -238,14 +238,14 @@ module.exports = function (mix) {
         vue: {},
 
         /**
-         * The name / path to the mix manifest.
+         * The name / path to the pod manifest.
          * The path is relative to the public path.
          *
          * Set to `false` to disable manifest generation.
          *
          * @type {string | false}
          */
-        manifest: `mix-manifest.json`,
+        manifest: `pod-manifest.json`,
 
         /**
          * Sets the css module identifier pattern

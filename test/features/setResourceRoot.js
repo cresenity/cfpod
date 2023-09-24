@@ -3,11 +3,11 @@ import test from 'ava';
 import { context } from '../helpers/test.js';
 
 test('mix.setResourceRoot()', t => {
-    const { mix, Mix } = context(t);
+    const { mix, Pod } = context(t);
 
     mix.setResourceRoot('some/path');
 
-    t.is('some/path', Mix.config.resourceRoot);
+    t.is('some/path', Pod.config.resourceRoot);
 });
 
 test.serial('mix.setResourceRoot() rewrites processed asset urls', async t => {

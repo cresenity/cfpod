@@ -1,11 +1,11 @@
 import test from 'ava';
 import mockRequire from 'mock-require';
 
-import Mix from '../../src/Mix.js';
+import Pod from '../../src/Pod.js';
 import VueVersion from '../../src/VueVersion.js';
 
 test.beforeEach(t => {
-    t.context.mix = new Mix();
+    t.context.mix = new Pod();
     t.context.vueVersion = new VueVersion(t.context.mix);
 });
 

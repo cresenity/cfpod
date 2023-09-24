@@ -9,10 +9,10 @@ class Manifest {
      * Create a new Manifest instance.
      *
      * @param {string} name
-     * @param {import('./Mix.js')} [mix]
+     * @param {import('./Pod.js')} [pod]
      */
-    constructor(name = 'mix-manifest.json', mix = undefined) {
-        this.mix = mix || global.Mix;
+    constructor(name = 'pod-manifest.json', pod = undefined) {
+        this.pod = pod || global.Pod;
 
         /** @type {Record<string, string>} */
         this.manifest = {};
@@ -27,7 +27,7 @@ class Manifest {
     get(file = null) {
         if (file) {
             return path.posix.join(
-                this.mix.config.publicPath,
+                this.pod.config.publicPath,
                 this.manifest[this.normalizePath(file)]
             );
         }
@@ -58,7 +58,7 @@ class Manifest {
      * @param {string} file
      */
     hash(file) {
-        let hash = new File(path.join(this.mix.config.publicPath, file)).version();
+        let hash = new File(path.join(this.pod.config.publicPath, file)).version();
 
         let filePath = this.normalizePath(file);
 
@@ -79,7 +79,7 @@ class Manifest {
     }
 
     /**
-     * Refresh the mix-manifest.js file.
+     * Refresh the pod-manifest.js file.
      */
     refresh() {
         if (this.path() === null) {
@@ -105,24 +105,24 @@ class Manifest {
      */
     path() {
         // Backwards compat for plugis that manually swapped out the manifest plugin with a different name
-        if (this.name !== 'mix-manifest.json') {
+        if (this.name !== 'pod-manifest.json') {
             if (!hasWarnedAboutManifestChange) {
                 hasWarnedAboutManifestChange = true;
                 console.warn(
-                    `You can now customize the name of the manifest using mix.options(${JSON.stringify(
+                    `You can now customize the name of the manifest using pod.options(${JSON.stringify(
                         { manifest: this.name }
                     )}) instead of changing the manifest name directly.`
                 );
             }
 
-            return path.join(this.mix.config.publicPath, this.name);
+            return path.join(this.pod.config.publicPath, this.name);
         }
 
-        if (!this.mix.config.manifest) {
+        if (!this.pod.config.manifest) {
             return null;
         }
 
-        return path.join(this.mix.config.publicPath, this.mix.config.manifest);
+        return path.join(this.pod.config.publicPath, this.pod.config.manifest);
     }
 
     /**
@@ -133,9 +133,9 @@ class Manifest {
     flattenAssets(stats) {
         let assets = Object.assign({}, stats.assetsByChunkName);
 
-        // If there's a temporary mix.js chunk, we can safely remove it.
-        if (assets.mix) {
-            assets.mix = collect(assets.mix).except('mix.js').all();
+        // If there's a temporary pod.js chunk, we can safely remove it.
+        if (assets.pod) {
+            assets.pod = collect(assets.pod).except('pod.js').all();
         }
 
         return (
@@ -154,10 +154,10 @@ class Manifest {
      */
     normalizePath(filePath) {
         if (
-            this.mix.config.publicPath &&
-            filePath.startsWith(this.mix.config.publicPath)
+            this.pod.config.publicPath &&
+            filePath.startsWith(this.pod.config.publicPath)
         ) {
-            filePath = filePath.substring(this.mix.config.publicPath.length);
+            filePath = filePath.substring(this.pod.config.publicPath.length);
         }
         filePath = filePath.replace(/\\/g, '/');
 

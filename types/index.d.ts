@@ -1,4 +1,4 @@
-// Type definitions for laravel-mix 6.0
+// Type definitions for cfpod 1.0.0
 // Project: https://github.com/JeffreyWay/laravel-mix#readme
 // Definitions by: Geoff Garbers <https://github.com/garbetjie>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -18,7 +18,7 @@ import { AcceptedPlugin } from 'postcss';
 import { VueLoaderOptions } from 'vue-loader';
 
 // @ts-ignore - May not be installed initially
-import MixHelpers from '../src/Mix';
+import MixHelpers from '../src/Pod';
 
 // General API
 interface Api {
@@ -313,7 +313,7 @@ declare global {
      *
      * @deprecated This will go away in a future release
      **/
-    var Mix: import('../src/Mix.js');
+    var Mix: import('../src/Pod.js');
 
     /**
      * The webpack config helper for the current mix build group

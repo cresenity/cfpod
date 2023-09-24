@@ -1,4 +1,4 @@
-// Type definitions for laravel-mix 6.0
+// Type definitions for cfpod 1.0.0
 
 import * as webpack from 'webpack';
 

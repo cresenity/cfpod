@@ -14,7 +14,7 @@ class Paths {
     }
 
     /**
-     * Set the root path to resolve webpack.mix.js.
+     * Set the root path to resolve webpack.pod.js.
      *
      * @param {string} path
      */
@@ -25,11 +25,11 @@ class Paths {
     }
 
     /**
-     * Determine the path to the user's webpack.mix.js file.
+     * Determine the path to the user's webpack.pod.js file.
      */
-    mix() {
+    pod() {
         const path = this.root(
-            process.env && process.env.MIX_FILE ? process.env.MIX_FILE : 'webpack.mix'
+            process.env && process.env.MIX_FILE ? process.env.MIX_FILE : 'webpack.pod'
         );
 
         try {

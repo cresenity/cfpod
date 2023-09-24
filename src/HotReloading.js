@@ -4,20 +4,20 @@ let File = require('./File');
 class HotReloading {
     /**
      *
-     * @param {import('./Mix')} mix
+     * @param {import('./Pod')} pod
      */
-    constructor(mix) {
-        this.mix = mix;
+    constructor(pod) {
+        this.pod = pod;
     }
 
     record() {
         this.clean();
 
-        if (!this.mix.config.hmr) {
+        if (!this.pod.config.hmr) {
             return;
         }
 
-        const { https, host, port } = this.mix.config.hmrOptions;
+        const { https, host, port } = this.pod.config.hmrOptions;
         const protocol = https ? 'https' : 'http';
         const url = `${protocol}://${host}:${port}`;
 
@@ -29,17 +29,17 @@ class HotReloading {
     }
 
     hotFile() {
-        return new File(path.join(this.mix.config.publicPath, 'hot'));
+        return new File(path.join(this.pod.config.publicPath, 'hot'));
     }
 
     /** @deprecated */
     http() {
-        return this.mix.config.hmrOptions.https ? 'https' : 'http';
+        return this.pod.config.hmrOptions.https ? 'https' : 'http';
     }
 
     /** @deprecated */
     port() {
-        return this.mix.config.hmrOptions.port;
+        return this.pod.config.hmrOptions.port;
     }
 
     clean() {
@@ -48,27 +48,27 @@ class HotReloading {
 
     /** @deprecated */
     static record() {
-        return new HotReloading(global.Mix).record();
+        return new HotReloading(global.Pod).record();
     }
 
     /** @deprecated */
     static hotFile() {
-        return new HotReloading(global.Mix).hotFile();
+        return new HotReloading(global.Pod).hotFile();
     }
 
     /** @deprecated */
     static http() {
-        return new HotReloading(global.Mix).http();
+        return new HotReloading(global.Pod).http();
     }
 
     /** @deprecated */
     static port() {
-        return new HotReloading(global.Mix).port();
+        return new HotReloading(global.Pod).port();
     }
 
     /** @deprecated */
     static clean() {
-        return new HotReloading(global.Mix).clean();
+        return new HotReloading(global.Pod).clean();
     }
 }
 

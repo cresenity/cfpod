@@ -128,7 +128,7 @@ test.serial(
 );
 
 test.serial(
-    "it merge Mix's default postcss plugins with any found in the user's postcss.config.js.",
+    "it merge Pod's default postcss plugins with any found in the user's postcss.config.js.",
     buildTest({
         prepare: ({ mix }) => mix.options({ production: true }),
 

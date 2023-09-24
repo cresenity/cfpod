@@ -70,7 +70,7 @@ test('it knows the path to the file', async t => {
 
 test.serial('it knows the relative path to the file', async t => {
     // TODO: Fix implicit reliance on cwd of the test
-    // TODO: Fix implicit reliance global Mix from `File`
+    // TODO: Fix implicit reliance global Pod from `File`
     const { disk } = context(t);
 
     const file = new File(disk.join('path/to/file.js'));
@@ -84,7 +84,7 @@ test.serial(
     'it can force the file to begin from the public path for the project.',
     async t => {
         // TODO: Fix implicit reliance on cwd of the test
-        // TODO: Fix implicit reliance global Mix from `File`
+        // TODO: Fix implicit reliance global Pod from `File`
         const file = new File('some/path/here.js');
 
         const newFile = file.forceFromPublic();
@@ -99,16 +99,16 @@ test.serial(
     'it knows the path to the file starting from the project public directory',
     async t => {
         // TODO: Fix implicit reliance on cwd of the test
-        // TODO: Fix implicit reliance global Mix from `File`
-        const { Mix } = context(t);
+        // TODO: Fix implicit reliance global Pod from `File`
+        const { Pod } = context(t);
 
         let file = new File('public/js/file.js');
 
-        t.is(path.normalize('/js/file.js'), file.pathFromPublic(Mix.config.publicPath));
+        t.is(path.normalize('/js/file.js'), file.pathFromPublic(Pod.config.publicPath));
 
         file = new File('js/file.js');
 
-        t.is(path.normalize('/js/file.js'), file.pathFromPublic(Mix.config.publicPath));
+        t.is(path.normalize('/js/file.js'), file.pathFromPublic(Pod.config.publicPath));
     }
 );
 

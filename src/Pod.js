@@ -15,8 +15,8 @@ const Log = require('./Log');
 
 /** @typedef {import("./tasks/Task")} Task */
 
-class Mix {
-    /** @type {Mix|null} */
+class Pod {
+    /** @type {Pod|null} */
     static _primary = null;
 
     /** @type {Record<string, boolean>} */
@@ -32,7 +32,7 @@ class Mix {
         this.chunks = new Chunks(this);
         this.components = new Components();
         this.dispatcher = new Dispatcher();
-        this.manifest = new Manifest('mix-manifest.json', this);
+        this.manifest = new Manifest('pod-manifest.json', this);
         this.paths = new Paths();
         this.registrar = new ComponentRegistrar(this);
         this.webpackConfig = new WebpackConfig(this);
@@ -71,7 +71,7 @@ class Mix {
      * @internal
      */
     static get primary() {
-        return Mix._primary || (Mix._primary = new Mix());
+        return Pod._primary || (Pod._primary = new Pod());
     }
 
     /**
@@ -80,7 +80,7 @@ class Mix {
     async build() {
         if (!this.booted) {
             console.warn(
-                'Mix was not set up correctly. Please ensure you import or require laravel-mix in your mix config.'
+                'Pod was not set up correctly. Please ensure you import or require cfpod in your pod config.'
             );
 
             this.boot();
@@ -134,9 +134,6 @@ class Mix {
         return this.dispatch('init', this);
     }
 
-    /**
-     * @return {import("laravel-mix").Api}
-     */
     get api() {
         if (!this._api) {
             this._api = this.registrar.installAll();
@@ -160,21 +157,21 @@ class Mix {
     }
 
     /**
-     * Determine if Mix is executing in a production environment.
+     * Determine if Pod is executing in a production environment.
      */
     inProduction() {
         return this.config.production;
     }
 
     /**
-     * Determine if Mix should use HMR.
+     * Determine if Pod should use HMR.
      */
     isHot() {
         return process.argv.includes('--hot');
     }
 
     /**
-     * Determine if Mix should watch files for changes.
+     * Determine if Pod should watch files for changes.
      */
     isWatching() {
         return this.isHot() || process.argv.includes('--watch');
@@ -192,7 +189,7 @@ class Mix {
     }
 
     /**
-     * Determine if Mix sees a particular tool or framework.
+     * Determine if Pod sees a particular tool or framework.
      *
      * @param {string} tool
      * @deprecated
@@ -266,7 +263,7 @@ class Mix {
         global.Config = this.config;
 
         // @ts-ignore
-        global.Mix = this;
+        global.Pod = this;
 
         // @ts-ignore
         global.webpackConfig = this.webpackConfig;
@@ -277,4 +274,4 @@ class Mix {
     }
 }
 
-module.exports = Mix;
+module.exports = Pod;

@@ -5,7 +5,7 @@
     "main": "src/index.js",
     "types": "types/index.d.ts",
     "scripts": {
-        "mix": "./bin/cli.js",
+        "pod": "./bin/cli.js",
         "test": "cd test && ava --verbose --timeout=30s --no-worker-threads",
         "lint:style": "eslint setup/ src/ test/ --max-warnings=0",
         "lint:types": "tsc --noEmit --skipLibCheck -p ."
@@ -16,19 +16,18 @@
         }
     },
     "bin": {
-        "mix": "./bin/cli.js",
-        "laravel-mix": "./bin/cli.js"
+        "pod": "./bin/cli.js",
+        "cf-pod": "./bin/cli.js"
     },
-    "repository": "JeffreyWay/laravel-mix",
+    "repository": "cresenity/cfpod",
     "bugs": {
-        "url": "https://github.com/JeffreyWay/laravel-mix/issues"
+        "url": "https://github.com/cresenity/cfpod/issues"
     },
-    "homepage": "https://github.com/JeffreyWay/laravel-mix#readme",
+    "homepage": "https://github.com/cresenity/cfpod#readme",
     "keywords": [
-        "laravel",
+        "cresenity",
         "webpack",
-        "laravel elixir",
-        "laravel mix"
+        "cf pod"
     ],
     "author": "Jeffrey Way",
     "license": "MIT",

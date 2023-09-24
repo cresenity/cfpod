@@ -4,9 +4,9 @@ import { context } from '../helpers/test.js';
 import { setupVueAliases } from './vue.js';
 
 test.beforeEach(async t => {
-    const { Mix } = context(t);
+    const { Pod } = context(t);
 
-    await setupVueAliases(2, Mix);
+    await setupVueAliases(2, Pod);
 });
 
 test.serial('JS compilation with vendor extraction config', async t => {

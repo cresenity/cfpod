@@ -1,14 +1,14 @@
 class VueVersion {
     /**
      *
-     * @param {import("./Mix")} mix
+     * @param {import("./Pod")} pod
      */
-    constructor(mix) {
-        this.mix = mix;
+    constructor(pod) {
+        this.pod = pod;
     }
 
     /**
-     * Vue versions that are supported by Mix.
+     * Vue versions that are supported by Pod.
      *
      * @returns {number[]}
      */
@@ -27,9 +27,9 @@ class VueVersion {
 
         if (!version || isNaN(version)) {
             try {
-                return this.detect(require(this.mix.resolve('vue')).version);
+                return this.detect(require(this.pod.resolve('vue')).version);
             } catch (e) {
-                this.mix.logger.error(`${e}`);
+                this.pod.logger.error(`${e}`);
                 this.fail();
             }
         }
@@ -46,7 +46,7 @@ class VueVersion {
      * @returns {never}
      */
     fail() {
-        this.mix.logger.error(
+        this.pod.logger.error(
             `We couldn't find a supported version of Vue in your project. ` +
                 `Please ensure that it's installed (npm install vue).`
         );

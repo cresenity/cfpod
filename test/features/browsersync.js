@@ -2,7 +2,7 @@ import test from 'ava';
 import mockRequire from 'mock-require';
 
 import BrowserSync from '../../src/components/BrowserSync.js';
-import MixClass from '../../src/Mix.js';
+import PodClass from '../../src/Pod.js';
 import { context } from '../helpers/test.js';
 
 mockRequire(
@@ -23,7 +23,7 @@ test('it handles Browsersync reloading', async t => {
 });
 
 test('it injects the snippet in the right place', t => {
-    let regex = new BrowserSync(new MixClass()).regex();
+    let regex = new BrowserSync(new PodClass()).regex();
 
     t.is(regex.exec(`<div></div>`), null);
     t.is(regex.exec(`<body></body>`).index, 6);
@@ -64,7 +64,7 @@ test('it configures Browsersync server', t => {
 });
 
 let browserSyncConfig = userConfig => {
-    let plugin = new BrowserSync(new MixClass());
+    let plugin = new BrowserSync(new PodClass());
 
     plugin.register(userConfig);
 

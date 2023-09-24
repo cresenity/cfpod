@@ -17,10 +17,10 @@ const babel = require('@babel/core');
 class BabelConfig {
     /**
      *
-     * @param {import("./Mix")} [mix]
+     * @param {import("./Pod")} [pod]
      */
-    constructor(mix) {
-        this.mix = mix || global.Mix;
+    constructor(pod) {
+        this.pod = pod || global.Pod;
     }
 
     /**
@@ -38,12 +38,12 @@ class BabelConfig {
     generate() {
         return this.mergeAll([
             this.default(),
-            this.getCustomConfig(this.mix.config.babelConfig),
+            this.getCustomConfig(this.pod.config.babelConfig),
             {
-                root: this.mix.paths.root(),
+                root: this.pod.paths.root(),
                 babelrc: true,
                 configFile: true,
-                babelrcRoots: ['.', this.mix.paths.root()]
+                babelrcRoots: ['.', this.pod.paths.root()]
             }
         ]);
     }
@@ -61,7 +61,7 @@ class BabelConfig {
     }
 
     /**
-     * Get the babel config setup when using mix.babelConfig()
+     * Get the babel config setup when using pod.babelConfig()
      *
      * @internal
      * @param {import('@babel/core').TransformOptions} customOptions

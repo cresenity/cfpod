@@ -3,7 +3,7 @@ const { Component } = require('./Component');
 const File = require('../File');
 
 module.exports = class React extends Component {
-    /** @type {import('laravel-mix').ReactConfig} */
+    /** @type {import('cfpod').ReactConfig} */
     options = {
         extractStyles: false
     };
@@ -34,7 +34,7 @@ module.exports = class React extends Component {
     /**
      * Register the component.
      *
-     * @param {import('laravel-mix').ReactConfig} options
+     * @param {import('cfpod').ReactConfig} options
      */
     register(options = {}) {
         if (
@@ -43,7 +43,7 @@ module.exports = class React extends Component {
             typeof arguments[1] === 'string'
         ) {
             throw new Error(
-                'mix.react() is now a feature flag. Use mix.js(source, destination).react() instead'
+                'pod.react() is now a feature flag. Use pod.js(source, destination).react() instead'
             );
         }
 
@@ -67,7 +67,7 @@ module.exports = class React extends Component {
     }
 
     /**
-     * Babel config to be merged with Mix's defaults.
+     * Babel config to be merged with Pod's defaults.
      */
     babelConfig() {
         const plugins = this.supportsFastRefreshing()

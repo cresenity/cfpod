@@ -45,10 +45,10 @@ let components = [
 class ComponentRegistrar {
     /**
      *
-     * @param {import('../Mix')} [mix]
+     * @param {import('../Pod')} [pod]
      */
-    constructor(mix) {
-        this.mix = mix || global.Mix;
+    constructor(pod) {
+        this.pod = pod || global.Pod;
 
         this.components = {};
     }
@@ -65,18 +65,18 @@ class ComponentRegistrar {
     /**
      * Install a component.
      *
-     * @param {import("laravel-mix").Component} ComponentDefinition
+     * @param {import("cfpod").Component} ComponentDefinition
      * @param {string[]} [names]
      */
     install(ComponentDefinition, names) {
-        /** @type {import("laravel-mix").Component} */
+        /** @type {import("cfpod").Component} */
         let component;
 
-        // If we're extending from the internal `Component` class then we provide the mix API object
+        // If we're extending from the internal `Component` class then we provide the pod API object
         if (Object.prototype.isPrototypeOf.call(Component, ComponentDefinition)) {
             // @ts-ignore
             // This API is not finalized which is why we've restricted to to the internal component class for now
-            component = new ComponentDefinition(this.mix);
+            component = new ComponentDefinition(this.pod);
         } else if (typeof ComponentDefinition === 'function') {
             component = new ComponentDefinition();
         } else {
@@ -85,7 +85,7 @@ class ComponentRegistrar {
 
         this.registerComponent(component, names || this.getComponentNames(component));
 
-        this.mix.listen('internal:gather-dependencies', () => {
+        this.pod.listen('internal:gather-dependencies', () => {
             if (!component.activated && !component.passive) {
                 return;
             }
@@ -94,13 +94,13 @@ class ComponentRegistrar {
                 return;
             }
 
-            this.mix.dependencies.enqueue(
+            this.pod.dependencies.enqueue(
                 concat([], component.dependencies()),
                 component.requiresReload || false
             );
         });
 
-        this.mix.listen('init', () => {
+        this.pod.listen('init', () => {
             if (!component.activated && !component.passive) {
                 return;
             }
@@ -108,19 +108,19 @@ class ComponentRegistrar {
             component.boot && component.boot();
             component.babelConfig && this.applyBabelConfig(component);
 
-            this.mix.listen('loading-entry', entry => {
+            this.pod.listen('loading-entry', entry => {
                 component.webpackEntry && component.webpackEntry(entry);
             });
 
-            this.mix.listen('loading-rules', rules => {
+            this.pod.listen('loading-rules', rules => {
                 component.webpackRules && this.applyRules(rules, component);
             });
 
-            this.mix.listen('loading-plugins', plugins => {
+            this.pod.listen('loading-plugins', plugins => {
                 component.webpackPlugins && this.applyPlugins(plugins, component);
             });
 
-            this.mix.listen('configReady', config => {
+            this.pod.listen('configReady', config => {
                 component.webpackConfig && component.webpackConfig(config);
             });
         });
@@ -156,7 +156,7 @@ class ComponentRegistrar {
          */
         const register = name => {
             this.components[name] = (...args) => {
-                this.mix.components.record(name, component);
+                this.pod.components.record(name, component);
 
                 component.caller = name;
 
@@ -174,10 +174,10 @@ class ComponentRegistrar {
                 this.components[name]();
             }
 
-            // Components can optionally write to the Mix API directly.
-            if (component.mix) {
-                Object.keys(component.mix()).forEach(name => {
-                    this.components[name] = component.mix()[name];
+            // Components can optionally write to the Pod API directly.
+            if (component.pod) {
+                Object.keys(component.pod()).forEach(name => {
+                    this.components[name] = component.pod()[name];
                 });
             }
         };
@@ -203,8 +203,8 @@ class ComponentRegistrar {
      * @param {Component} component
      */
     applyBabelConfig(component) {
-        this.mix.config.babelConfig = mergeWebpackConfig(
-            this.mix.config.babelConfig,
+        this.pod.config.babelConfig = mergeWebpackConfig(
+            this.pod.config.babelConfig,
             component.babelConfig()
         );
     }

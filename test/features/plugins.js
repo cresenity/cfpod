@@ -57,10 +57,10 @@ test('mix can be extended with new functionality as a class instance', t => {
 });
 
 test('dependencies can be requested for download', async t => {
-    const { mix, Mix } = context(t);
+    const { mix, Pod } = context(t);
 
-    Mix.dependencies.enqueue = sinon.spy();
-    Mix.dependencies.install = sinon.spy();
+    Pod.dependencies.enqueue = sinon.spy();
+    Pod.dependencies.install = sinon.spy();
 
     mix.extend(
         'foobar',
@@ -92,12 +92,12 @@ test('dependencies can be requested for download', async t => {
     // @ts-ignore - No declaration merging with JSDoc
     mix.foobar2();
 
-    await Mix.installDependencies();
-    await Mix.init();
+    await Pod.installDependencies();
+    await Pod.init();
 
-    t.true(Mix.dependencies.enqueue.calledWith(['npm-package'], false));
-    t.true(Mix.dependencies.enqueue.calledWith(['npm-package2'], true));
-    t.true(Mix.dependencies.install.called);
+    t.true(Pod.dependencies.enqueue.calledWith(['npm-package'], false));
+    t.true(Pod.dependencies.enqueue.calledWith(['npm-package2'], true));
+    t.true(Pod.dependencies.install.called);
 });
 
 test('webpack entry may be appended to', async t => {
@@ -196,7 +196,7 @@ test('the fully constructed webpack config object is available for modification,
     t.true(config.stats.performance);
 });
 
-test('prior Mix components can be overwritten', t => {
+test('prior Pod components can be overwritten', t => {
     const { mix } = context(t);
 
     let component = {
@@ -284,7 +284,7 @@ test('components can manually hook into the mix API', t => {
 });
 
 test('components can be booted, after the webpack.mix.js configuration file has processed', async t => {
-    const { mix, Mix } = context(t);
+    const { mix, Pod } = context(t);
 
     let stub = sinon.spy();
 
@@ -302,13 +302,13 @@ test('components can be booted, after the webpack.mix.js configuration file has 
 
     t.false(stub.called);
 
-    await Mix.init();
+    await Pod.init();
 
     t.true(stub.called);
 });
 
 test('can register plugin with anonymous closure', async t => {
-    const { mix, Mix, webpack } = context(t);
+    const { mix, Pod, webpack } = context(t);
 
     let stub = sinon.spy();
 
@@ -319,7 +319,7 @@ test('can register plugin with anonymous closure', async t => {
 
     t.false(stub.called);
 
-    await Mix.init();
+    await Pod.init();
 
     t.false(stub.called);
 

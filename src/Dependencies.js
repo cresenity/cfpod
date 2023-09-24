@@ -92,7 +92,7 @@ class Dependencies {
             return;
         }
 
-        Log.feedback('Finished. Please run Mix again.');
+        Log.feedback('Finished. Please run Pod again.');
 
         if (process.env.NODE_ENV !== 'test') {
             process.exit(1);

@@ -64,7 +64,7 @@ class FileCollection {
      * @param {string} contents
      */
     babelify(contents) {
-        let babelConfig = this.mix.config.babel();
+        let babelConfig = this.pod.config.babel();
 
         delete babelConfig.cacheDirectory;
 
@@ -79,33 +79,35 @@ class FileCollection {
      */
     async normalizeSourceFiles(src) {
         // 1. Always work with an array of sources
-        let sources = Array.isArray(src) ? src : [src]
+        let sources = Array.isArray(src) ? src : [src];
 
         // 2. Ensure we're working with File objects
         let files = sources.map(file => {
-            return typeof file === 'string'
-                ? new File(file)
-                : file
-        })
+            return typeof file === 'string' ? new File(file) : file;
+        });
 
-        let globAsync = promisify(glob)
+        let globAsync = promisify(glob);
 
         // 3. Expand globs
-        let groups = await Promise.all(files.map(async file => {
-            if (! file.contains('*')) {
-                return [file]
-            }
+        let groups = await Promise.all(
+            files.map(async file => {
+                if (!file.contains('*')) {
+                    return [file];
+                }
 
-            let files = await globAsync(file.path(), { nodir: true });
+                let files = await globAsync(file.path(), { nodir: true });
 
-            if (!files.length) {
-                Log.feedback(`Notice: The ${file.path()} search produced no matches.`);
-            }
+                if (!files.length) {
+                    Log.feedback(
+                        `Notice: The ${file.path()} search produced no matches.`
+                    );
+                }
 
-            return files.map(filepath => new File(filepath))
-        }))
+                return files.map(filepath => new File(filepath));
+            })
+        );
 
-        return groups.flat()
+        return groups.flat();
     }
 
     /**
@@ -116,9 +118,9 @@ class FileCollection {
      * @return {Promise<void>}
      */
     async copyTo(destination, src = this.files) {
-        this.assets = this.assets || []
+        this.assets = this.assets || [];
 
-        let sourceFiles = await this.normalizeSourceFiles(src)
+        let sourceFiles = await this.normalizeSourceFiles(src);
         let assets = [];
 
         // Copy an array of files to the destination file/directory
@@ -150,8 +152,8 @@ class FileCollection {
         this.assets = assets;
     }
 
-    get mix() {
-        return global.Mix;
+    get pod() {
+        return global.Pod;
     }
 }
 

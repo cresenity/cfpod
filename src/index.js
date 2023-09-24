@@ -1,20 +1,20 @@
-const Mix = require('./Mix');
+const Pod = require('./Pod');
 
 require('./helpers');
 
 /*
  |--------------------------------------------------------------------------
- | Welcome to Laravel Mix!
+ | Welcome to Laravel Pod!
  |--------------------------------------------------------------------------
  |
- | Laravel Mix provides a clean, fluent API for defining basic webpack
- | build steps for your Laravel application. Mix supports a variety
+ | Laravel Pod provides a clean, fluent API for defining basic webpack
+ | build steps for your Laravel application. Pod supports a variety
  | of common CSS and JavaScript pre-processors out of the box.
  |
  */
 
-let mix = Mix.primary;
+let pod = Pod.primary;
 
-mix.boot();
+pod.boot();
 
-module.exports = mix.api;
+module.exports = pod.api;

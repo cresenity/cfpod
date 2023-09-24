@@ -25,7 +25,7 @@ class VersionFilesTask extends Task {
         this.assets = files.map(filepath => {
             const file = new File(filepath);
 
-            this.mix.manifest.hash(file.pathFromPublic());
+            this.pod.manifest.hash(file.pathFromPublic());
 
             return file;
         });
@@ -37,11 +37,11 @@ class VersionFilesTask extends Task {
      * @param {string} updatedFile
      */
     onChange(updatedFile) {
-        this.mix.manifest.hash(new File(updatedFile).pathFromPublic()).refresh();
+        this.pod.manifest.hash(new File(updatedFile).pathFromPublic()).refresh();
     }
 
-    get mix() {
-        return global.Mix;
+    get pod() {
+        return global.Pod;
     }
 }
 

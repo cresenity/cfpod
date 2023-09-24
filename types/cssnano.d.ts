@@ -1,4 +1,4 @@
-// Type definitions for laravel-mix 6.0
+// Type definitions for cfpod 1.0.0
 // cssnano v5 does not have a types file yet
 
 import { AcceptedPlugin } from 'postcss';

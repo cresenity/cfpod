@@ -1,22 +1,22 @@
 /**
  * This file represents an example component interface
- * for Mix. All new components can be "inserted" into
- * Mix, like so:
+ * for Pod. All new components can be "inserted" into
+ * Pod, like so:
  *
- * // webpack.mix.js
+ * // webpack.pod.js
  *
- * mix.extend('foo', new Example());
+ * pod.extend('foo', new Example());
  *
- * mix.foo();
+ * pod.foo();
  */
 const { Component } = require('./Component');
 
 module.exports = class Example {
     /**
-     * The optional name to be used when called by Mix.
+     * The optional name to be used when called by Pod.
      * Defaults to the class name, lowercased.
      *
-     * Ex: mix.example();
+     * Ex: pod.example();
      *
      * @return {string|string[]}
      */
@@ -27,7 +27,7 @@ module.exports = class Example {
     }
 
     /**
-     * All dependencies that should be installed by Mix.
+     * All dependencies that should be installed by Pod.
      *
      * @return {string[]}
      */
@@ -43,7 +43,7 @@ module.exports = class Example {
      * will be passed to this method.
      *
      * Ex: register(src, output) {}
-     * Ex: mix.yourPlugin('src/path', 'output/path');
+     * Ex: pod.yourPlugin('src/path', 'output/path');
      *
      * @param  {any} ...params
      * @return {void}
@@ -56,7 +56,7 @@ module.exports = class Example {
 
     /**
      * Boot the component. This method is triggered after the
-     * user's webpack.mix.js file has executed.
+     * user's webpack.pod.js file has executed.
      */
     boot() {
         // Example:
@@ -64,7 +64,7 @@ module.exports = class Example {
     }
 
     /**
-     * Append to the master Mix webpack entry object.
+     * Append to the master Pod webpack entry object.
      *
      * @param  {Entry} entry
      * @return {void}
@@ -109,7 +109,7 @@ module.exports = class Example {
     }
 
     /**
-     * Babel config to be merged with Mix's defaults.
+     * Babel config to be merged with Pod's defaults.
      *
      * @return {import("@babel/core").TransformOptions}
      */
@@ -120,4 +120,4 @@ module.exports = class Example {
 };
 
 // Usage:
-// mix.extend('example', new Example());
+// pod.extend('example', new Example());

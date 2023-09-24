@@ -26,11 +26,11 @@ class Chunks {
 
     /**
      *
-     * @param {import("./Mix")} mix
+     * @param {import("./Pod")} pod
      */
-    constructor(mix) {
-        // TODO: Simplify in Mix 7 -- Here for backwards compat if a plugin creates this class directly
-        this.mix = mix || global.Mix;
+    constructor(pod) {
+        // TODO: Simplify in Pod 7 -- Here for backwards compat if a plugin creates this class directly
+        this.pod = pod || global.Pod;
 
         /** @type {{[key: string]: CacheGroup}} */
         this.chunks = {};
@@ -58,7 +58,7 @@ class Chunks {
      * @return {Chunks}
      */
     static reset() {
-        return (Chunks._instance = new Chunks(global.Mix));
+        return (Chunks._instance = new Chunks(global.Pod));
     }
 
     /**
@@ -149,7 +149,7 @@ class Chunks {
         return {
             runtimeChunk: {
                 name: path
-                    .join(this.mix.config.runtimeChunkPath || this.entry.base, 'manifest')
+                    .join(this.pod.config.runtimeChunkPath || this.entry.base, 'manifest')
                     .replace(/\\/g, '/')
             }
         };
