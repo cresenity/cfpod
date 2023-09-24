@@ -62,7 +62,7 @@ class BuildOutputPlugin {
                 relatedAssets: this.options.showRelated
             });
 
-            this.heading(`Laravel Pod v${version}`);
+            this.heading(`CF Pod v${version}`);
 
             console.log(chalk.green.bold(`✔ Compiled Successfully in ${data.time}ms`));
 
