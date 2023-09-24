@@ -1,7 +1,7 @@
 {
     "name": "@cresenity/cfpod",
     "version": "1.0.0",
-    "description": "The power of webpack, distilled for the rest of us.",
+    "description": "Copied from laravel-mix",
     "main": "src/index.js",
     "types": "types/index.d.ts",
     "scripts": {
